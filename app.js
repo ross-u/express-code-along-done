@@ -1,21 +1,30 @@
 const express = require('express');
-
 const app = express();
 
-
+// MIDDLEWARE
 // Middleware for static files
 app.use(express.static('public'));
 
-// Our first route
+
+// ROUTES
+// GET `/` route
 app.get('/', (request, response, next)=> {
   response.sendFile(__dirname + '/public/views/index.html');
 });
 
-// Our secon route
+// GET `/about` route
 app.get('/about', (request, response, next)=> {
-  response.send('<h1>About me - page</h1>')
+  response.sendFile(__dirname + '/public/views/about.html');
 });
 
+// 404 route
+app.get('/*', (request, response, next)=> {
+  response.status(404);
+  response.send('<h1>404 - Page Not Found</h1>');
+});
+
+
+// START THE SERVER
 app.listen(3000, () => {
   console.log('My first express up is running :) ');
 });
